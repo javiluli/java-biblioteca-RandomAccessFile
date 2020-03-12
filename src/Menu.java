@@ -36,8 +36,6 @@ public class Menu {
 	public void menu() throws Exception {
 		Teclado t = new Teclado();
 		int n;
-		// Comprobar que el fichero de Usuarios existe. Si este no existe, llamra al
-		// metodo para crea un archivo lleno de usuarios nulos
 		Archivos.CrearFichero();
 		// =============================================
 
@@ -48,15 +46,15 @@ public class Menu {
 			case 1:
 				System.out.println("Introducir titulo del libro: ");
 				MetodosRAF.altaLibro(t.leerString().trim().toUpperCase());
+				Backup.backupLibro(Const.FLIBROS, Const.FLIBROSBACKUP);
 				break;
 			case 2:
-				// Falta pulir a la hora de dar de alta a un usuario cuando hay espacios libres
-				// entre medias del primero y el ultimo usuario ordenado
-				System.out.println("Introducir nombre del usuario: ");
+
+//				System.out.println("Introducir nombre del usuario: ");
 
 				break;
 			case 3:
-				System.out.println("Id del usuario a dar de baja: ");
+//				System.out.println("Id del usuario a dar de baja: ");
 
 				break;
 			case 4:
@@ -79,9 +77,7 @@ public class Menu {
 //				codigo = t.leerInt();
 //				vp = PrestamoLibro.verificarPrestamo(codigo);
 //				System.out.println(vp);
-				// NOTA PARA SOLUCIONAR: aunque el libro no exista, este pedira el usuairo al
-				// que le sera prestado (posible solucion, crear metodo que antes verifique si
-				// dicho libro existe, y despues si este existe, verificar sie sta prestado)
+
 //				if (vp) {
 //					System.out.println("ID del usuario");
 //					id = t.leerInt();

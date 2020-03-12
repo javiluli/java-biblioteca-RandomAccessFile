@@ -12,8 +12,9 @@ public class MetodosRAF {
 	static RandomAccessFile f;
 
 	/**
-	 * Exception longitud titulo.
-	 *
+	 * Exception longitud titulo. Genera una excepcion cuando la longitud del ttulo
+	 * sea mayo de la establecida en Const.LONGITUDTITULO
+	 * 
 	 * @param s the s
 	 * @throws Exception the exception
 	 */
@@ -23,7 +24,7 @@ public class MetodosRAF {
 	}
 
 	/**
-	 * Permite ir de manera directa al Alumno deseado
+	 * Permite ir de manera directa al libro deseado
 	 *
 	 * @param f      the f
 	 * @param pos    the pos
@@ -35,7 +36,7 @@ public class MetodosRAF {
 	}
 
 	/**
-	 * Insertar al final fichero.
+	 * Insertar al final fichero. Agrega un libro al final del fichero
 	 *
 	 * @param nombre the nombre
 	 * @param notas  the notas
@@ -51,7 +52,7 @@ public class MetodosRAF {
 	}
 
 	/**
-	 * Alta libro.
+	 * Alta libro. Permite agregar un libro nuevo al fichero
 	 *
 	 * @param s the s
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -66,7 +67,7 @@ public class MetodosRAF {
 	}
 
 	/**
-	 * Contar resgistros. Cuenta la cantidad de alumnos almacenados en el fichero
+	 * Contar resgistros. Cuenta la cantidad de libros almacenados en el fichero
 	 *
 	 * @return the int
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -90,7 +91,8 @@ public class MetodosRAF {
 	}
 
 	/**
-	 * Ver libros.
+	 * Ver libros. Permite ver por consola todos los libros que no se encuentren en
+	 * prestamo
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
@@ -114,7 +116,7 @@ public class MetodosRAF {
 	}
 
 	/**
-	 * Mostrar fichero.
+	 * Mostrar fichero. Permite ver todo el fichero
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */

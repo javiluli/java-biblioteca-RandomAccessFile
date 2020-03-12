@@ -32,7 +32,10 @@ public class Const {
 	// ######################################
 	// Constantes sobre Libros
 	// ######################################
+
+	/** Longitud maxima que puede tener el titulo de un libro. */
 	final static int LONGITUDTITULO = 45;
+
 	/** Cantidad maxima de libros almacenados en la biblioteca */
 	public final static int MAXLIBROS = 100;
 
