@@ -1,3 +1,8 @@
+
+/**
+ *
+ * @author Javier Delgado Rodriguez
+ */
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -5,6 +10,17 @@ import java.io.RandomAccessFile;
 public class MetodosRAF {
 	/** The f. */
 	static RandomAccessFile f;
+
+	/**
+	 * Exception longitud titulo.
+	 *
+	 * @param s the s
+	 * @throws Exception the exception
+	 */
+	public static void exceptionLongitudTitulo(String s) throws Exception {
+		if (s.length() >= Const.LONGITUDTITULO)
+			throw new Exception("El titulo del libro excede la longitud permitida (45 caracteres)");
+	}
 
 	/**
 	 * Permite ir de manera directa al Alumno deseado
@@ -27,12 +43,26 @@ public class MetodosRAF {
 	 */
 	static void insertarAlFinalFichero(String titulo) throws IOException {
 		f = new RandomAccessFile(Const.FLIBROS, "rw");
-//		boolean b = leerPrimerRegistro();
 		int n = contarResgistros();
 		Libro l = new Libro((n), titulo.toUpperCase(), false);
 		f.seek(l.getLongitudRegistroLibro() * n); // f.length();
 		l.escribir(f);
 		f.close();
+	}
+
+	/**
+	 * Alta libro.
+	 *
+	 * @param s the s
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	static void altaLibro(String s) throws IOException {
+		try {
+			exceptionLongitudTitulo(s);
+			MetodosRAF.insertarAlFinalFichero(s);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 
 	/**
@@ -57,6 +87,30 @@ public class MetodosRAF {
 		} else
 			System.out.println("El Fichero no existe - ERROR EN: contarResgistros");
 		return n;
+	}
+
+	/**
+	 * Ver libros.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void verLibrosNoPrestados() throws IOException {
+
+		if (new File(Const.FLIBROS).isFile()) {
+			RandomAccessFile f = new RandomAccessFile(Const.FLIBROS, "r");
+			Libro l = new Libro();
+			boolean hayDatos = l.leer(f);
+			f.seek(l.getLongitudRegistroLibro()); // f.length();
+
+			while (hayDatos) {
+				if (!l.prestado)
+					l.mostrar();
+				hayDatos = l.leer(f);
+			}
+
+			f.close();
+		} else
+			System.out.println("El Fichero no existe - ERROR EN: verLibrosNoPrestados");
 	}
 
 	/**
