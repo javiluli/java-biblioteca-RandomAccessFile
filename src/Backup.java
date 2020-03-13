@@ -8,14 +8,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Backup.
  */
 public class Backup {
 
 	/**
-	 * Reemplazo fich. Elimina el archivo antiguo de usuarios y en su lugar se
-	 * renombra el auxiliar con el de usuarios eliminado
+	 * Reemplazo fich.
 	 *
 	 * @param FDATOS    the fdatos
 	 * @param FDATOSAUX the fdatosaux
@@ -29,8 +29,7 @@ public class Backup {
 	}
 
 	/**
-	 * Backup libro. Genera una copia del fichero como backup. Este metodo es
-	 * llamado cuando se agrega un libro o un usuario.
+	 * Backup libro.
 	 *
 	 * @param FDATOS    the fdatos
 	 * @param FDATOSAUX the fdatosaux
@@ -56,34 +55,31 @@ public class Backup {
 			System.out.println("El Fichero no existe - ERROR EN: backupLibro");
 	}
 
-//	public static void backupUsuario(String FDATOS, String FDATOSAUX) throws IOException {
-//		MiObjectOutputStream oo = new MiObjectOutputStream(new FileOutputStream(FDATOSAUX));
-//		MiObjectInputStream oi = null;
-//		boolean b = false;
-//
-//		try {// comprueba que el archivo FLIBROS existe antes de leerlo
-//			oi = new MiObjectInputStream(new FileInputStream(FDATOS));
-//			b = true;
-//		} catch (Exception e) {
-//			System.out.println("Archivo no encontrado");
-//		}
-//
-//		if (b) {
-//			try {
-//				while (b) {// si el archivo existe, muestra en pantalla el listado de libros
-//					try {
-//						Usuario u = (Usuario) oi.readObject();
-//						oo.writeObject(u);
-//
-//					} catch (EOFException e) {
-//						b = false;
-//					}
-//				} // finaliza el while para la lectura
-//				oo.close();
-//				oi.close();
-//			} catch (Exception e) {// encaso de encontrar el archivo pero no puede leerlo
-//				System.out.println("Problemas al leer el archivo de usuarios" + e.toString());
-//			}
-//		}
-//	}
+	/**
+	 * Backup usuario.
+	 *
+	 * @param FDATOS    the fdatos
+	 * @param FDATOSAUX the fdatosaux
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void backupUsuario(String FDATOS, String FDATOSAUX) throws IOException {
+
+		RandomAccessFile faux = new RandomAccessFile(Const.FUSUARIOSBACKUP, "rw");
+
+		if (new File(Const.FUSUARIOS).isFile()) {
+			RandomAccessFile f = new RandomAccessFile(Const.FUSUARIOS, "r");
+			Usuario u = new Usuario();
+			boolean hayDatos = u.leer(f);
+			f.seek(u.getlongitugRegistroUsuario()); // f.length();
+
+			while (hayDatos) {
+				u.escribir(faux);
+				hayDatos = u.leer(f);
+			}
+
+			f.close();
+			faux.close();
+		} else
+			System.out.println("El Fichero no existe - ERROR EN: backupLibro");
+	}
 }

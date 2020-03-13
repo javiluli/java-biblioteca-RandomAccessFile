@@ -10,7 +10,10 @@ public class Const {
 	// ######################################
 	// Constantes sobre Usuarios
 	// ######################################
-//	final static int TAMANONOMBREUSUARIO = 20;
+
+	/** Longitud maxima que puede tener el nombre de un usuario */
+	final static int LONGITUDNOMBRE = 20;
+
 	/** Cantidad maxima de usuarios que almacena la biblioteca */
 	public final static int MAXUSUARIOS = 15;
 
@@ -33,7 +36,7 @@ public class Const {
 	// Constantes sobre Libros
 	// ######################################
 
-	/** Longitud maxima que puede tener el titulo de un libro. */
+	/** Longitud maxima que puede tener el titulo de un libro */
 	final static int LONGITUDTITULO = 45;
 
 	/** Cantidad maxima de libros almacenados en la biblioteca */

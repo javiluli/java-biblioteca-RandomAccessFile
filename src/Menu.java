@@ -16,12 +16,12 @@ public class Menu {
 		System.out.println("==================== MENU ====================");
 		System.out.println("______________________________________________");
 		System.out.println("| 1.- Dar de alta un libro");
-//		System.out.println("| 2.- Alta de usuarios");
+		System.out.println("| 2.- Alta de usuarios");
 //		System.out.println("| 3.- Baja de usuarios");
 //		System.out.println("| 4.- Préstamo de libros");
 //		System.out.println("| 5.- Devolución de libro");
 //		System.out.println("| 6.- Consulta de un libro");
-//		System.out.println("| 7.- Listado de usuarios");
+		System.out.println("| 7.- Listado de usuarios");
 		System.out.println("| 8.- Listado de libros no prestados");
 		System.out.println("| 9.- Listado de todos los libros almacenados");
 		System.out.println("| 0.- Salir de la aplicacion");
@@ -30,27 +30,28 @@ public class Menu {
 
 	/**
 	 * Menu.
-	 * 
-	 * @throws Exception
+	 *
+	 * @throws Exception the exception
 	 */
 	public void menu() throws Exception {
 		Teclado t = new Teclado();
 		int n;
 		Archivos.CrearFichero();
+		System.out.println();
 		// =============================================
-
 		do {
 			opcionesMenu();
 			n = t.leerInt();
 			switch (n) {
 			case 1:
 				System.out.println("Introducir titulo del libro: ");
-				MetodosRAF.altaLibro(t.leerString().trim().toUpperCase());
+				RAFLibros.altaLibro(t.leerString().trim().toUpperCase());
 				Backup.backupLibro(Const.FLIBROS, Const.FLIBROSBACKUP);
 				break;
 			case 2:
-
-//				System.out.println("Introducir nombre del usuario: ");
+				System.out.println("Introducir nombre del usuario: ");
+				RAFUsuarios.altaUsuario(t.leerString().trim().toUpperCase());
+				Backup.backupUsuario(Const.FUSUARIOS, Const.FUSUARIOSBACKUP);
 
 				break;
 			case 3:
@@ -97,13 +98,13 @@ public class Menu {
 //				}
 				break;
 			case 7:
-
+				RAFUsuarios.mostrarFichero();
 				break;
 			case 8:
-				MetodosRAF.verLibrosNoPrestados();
+				RAFLibros.verLibrosNoPrestados();
 				break;
 			case 9:
-				MetodosRAF.mostrarFichero();
+				RAFLibros.mostrarFichero();
 				break;
 			case 0:
 //			System.out.println("Salir de la aplicacion");

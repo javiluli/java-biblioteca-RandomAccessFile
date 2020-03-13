@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class MetodosRAF {
+public class RAFLibros {
 	/** The f. */
 	static RandomAccessFile f;
 
@@ -31,48 +31,47 @@ public class MetodosRAF {
 	 * @param tamReg the tam reg
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	static void irARegistro(RandomAccessFile f, int pos, int tamReg) throws IOException {
+	public static void irARegistro(RandomAccessFile f, int pos, int tamReg) throws IOException {
 		f.seek(pos * tamReg);
 	}
 
 	/**
-	 * Insertar al final fichero. Agrega un libro al final del fichero
+	 * Agrega un libro al final del fichero
 	 *
-	 * @param nombre the nombre
-	 * @param notas  the notas
+	 * @param s Titulo del libro
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	static void insertarAlFinalFichero(String titulo) throws IOException {
+	public static void insertarAlFinalFichero(String s) throws IOException {
 		f = new RandomAccessFile(Const.FLIBROS, "rw");
 		int n = contarResgistros();
-		Libro l = new Libro((n), titulo.toUpperCase(), false);
-		f.seek(l.getLongitudRegistroLibro() * n); // f.length();
+		Libro l = new Libro((n), s.toUpperCase(), false);
+		f.seek(l.getLongitudRegistroLibro() * n);
 		l.escribir(f);
 		f.close();
 	}
 
 	/**
-	 * Alta libro. Permite agregar un libro nuevo al fichero
+	 * Permite agregar un libro nuevo al fichero
 	 *
-	 * @param s the s
+	 * @param s Titulo del libro
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	static void altaLibro(String s) throws IOException {
+	public static void altaLibro(String s) throws IOException {
 		try {
 			exceptionLongitudTitulo(s);
-			MetodosRAF.insertarAlFinalFichero(s);
+			RAFLibros.insertarAlFinalFichero(s);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 	}
 
 	/**
-	 * Contar resgistros. Cuenta la cantidad de libros almacenados en el fichero
+	 * Cuenta la cantidad de libros almacenados en el fichero
 	 *
 	 * @return the int
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	static int contarResgistros() throws IOException {
+	public static int contarResgistros() throws IOException {
 		int n = 0;
 		// Comprobar antes si existe el fichero.
 		if (new File(Const.FLIBROS).isFile()) {
@@ -91,8 +90,7 @@ public class MetodosRAF {
 	}
 
 	/**
-	 * Ver libros. Permite ver por consola todos los libros que no se encuentren en
-	 * prestamo
+	 * Permite ver por consola todos los libros que no se encuentren en prestamo
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
@@ -116,11 +114,11 @@ public class MetodosRAF {
 	}
 
 	/**
-	 * Mostrar fichero. Permite ver todo el fichero
+	 * Permite ver todo el fichero
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	static void mostrarFichero() throws IOException {
+	public static void mostrarFichero() throws IOException {
 		// Comprobar antes si existe el fichero.
 		if (new File(Const.FLIBROS).isFile()) {
 			RandomAccessFile f = new RandomAccessFile(Const.FLIBROS, "r");
