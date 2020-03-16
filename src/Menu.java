@@ -17,7 +17,7 @@ public class Menu {
 		System.out.println("______________________________________________");
 		System.out.println("| 1.- Dar de alta un libro");
 		System.out.println("| 2.- Alta de usuarios");
-//		System.out.println("| 3.- Baja de usuarios");
+		System.out.println("| 3.- Baja de usuarios");
 //		System.out.println("| 4.- Préstamo de libros");
 //		System.out.println("| 5.- Devolución de libro");
 //		System.out.println("| 6.- Consulta de un libro");
@@ -38,6 +38,7 @@ public class Menu {
 		int n;
 		Archivos.CrearFichero();
 		System.out.println();
+
 		// =============================================
 		do {
 			opcionesMenu();
@@ -55,7 +56,8 @@ public class Menu {
 
 				break;
 			case 3:
-//				System.out.println("Id del usuario a dar de baja: ");
+				System.out.println("Introducir ID del usuario para dar de baja: ");
+				RAFUsuarios.bajaUsuario(t.leerInt());
 
 				break;
 			case 4:

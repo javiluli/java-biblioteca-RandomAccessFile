@@ -40,7 +40,7 @@ public class Libro {
 	 *
 	 * @return the tamano registro
 	 */
-	int getLongitudRegistroLibro() {
+	static int getLongitudRegistroLibro() {
 		return (Const.LONGITUDTITULO + 4 + 1);
 	}
 
