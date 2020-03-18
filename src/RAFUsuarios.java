@@ -82,19 +82,31 @@ public class RAFUsuarios {
 		try {
 			exceptionLongitudNombre(s);
 			int n = CrearArrayDe.buscarUsuarioNulo();
-			System.out.println(n);
+//			System.out.println(n);
 
 			f = new RandomAccessFile(Const.FUSUARIOS, "rw");
 			// Para el resto de registro se debera hacer un seek para no reemplazxar
 			// resgitros anteriores.
 			// Cambiar a partir de aqui ->
 			Usuario u = new Usuario();
+
 			u.leer(f);
+//			u.mostrarUsuarios();
+			f.seek(0);
+//			System.out.println("Puntero 1: " + f.getFilePointer());
+//			System.out.println("N vale: " + n);
+			f.seek(Usuario.getlongitugRegistroUsuario() * n);
+			
+//			System.out.println("Puntero 2: " + f.getFilePointer());
+			u.leer(f);
+			f.seek(Usuario.getlongitugRegistroUsuario() * n);
+//			System.out.println(u.toString());
 
-			if (u.getId() == -1)
+			if (u.getId() == -1) {
 				u = new Usuario(s, n);
-
-			u.escribir(f);
+				u.escribir(f);
+			}
+//			u.mostrarUsuarios();
 			f.close();
 
 //			RAFUsuarios.insertarAlFinalFichero(s);
