@@ -45,7 +45,7 @@ public class RAFLibros {
 		f = new RandomAccessFile(Const.FLIBROS, "rw");
 		int n = contarResgistros();
 		Libro l = new Libro((n), s.toUpperCase(), false);
-		f.seek(l.getLongitudRegistroLibro() * n);
+		f.seek(Libro.getLongitudRegistroLibro() * n);
 		l.escribir(f);
 		f.close();
 	}

@@ -19,7 +19,9 @@ public class Archivos {
 		if (!f.exists())
 			f.createNewFile();
 		f = new File(Const.FUSUARIOS);
-		if (!f.exists())
+		if (!f.exists()) {
 			f.createNewFile();
+			RAFUsuarios.usuariosNulos();
+		}
 	}
 }

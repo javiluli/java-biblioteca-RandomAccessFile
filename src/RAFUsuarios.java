@@ -34,23 +34,46 @@ public class RAFUsuarios {
 		f.seek(pos * tamReg);
 	}
 
+//	/**
+//	 * Agrega un usuario al final del fichero
+//	 *
+//	 * @param s Nombre del usuario
+//	 * @throws IOException Signals that an I/O exception has occurred.
+//	 */
+//	public static void insertarAlFinalFichero(String s) throws IOException {
+//		f = new RandomAccessFile(Const.FUSUARIOS, "rw");
+//		int n = contarResgistros();
+//		Usuario u = new Usuario(s, n);
+//		f.seek(Usuario.getlongitugRegistroUsuario() * n);
+//		u.escribir(f);
+//		f.close();
+//	}
+
 	/**
-	 * Agrega un usuario al final del fichero
+	 * Usuarios nulos.
 	 *
-	 * @param s Nombre del usuario
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void insertarAlFinalFichero(String s) throws IOException {
+	public static void usuariosNulos() throws IOException {
+
 		f = new RandomAccessFile(Const.FUSUARIOS, "rw");
 		int n = contarResgistros();
-		Usuario u = new Usuario(s, n);
-		f.seek(u.getlongitugRegistroUsuario() * n);
-		u.escribir(f);
+		Usuario u = new Usuario("", -1);
+		while (n < Const.MAXUSUARIOS) {
+			n = contarResgistros();
+			f.seek(Usuario.getlongitugRegistroUsuario() * n);
+			u.escribir(f);
+		}
 		f.close();
+
 	}
 
 	/**
 	 * Permite agregar un usuario nuevo al fichero
+	 * 
+	 * NOTA: Al leer se salta al siguiente registro, es necesario retroceder dicho
+	 * registro para manipular este mismo. Tambien se debe buscar el siguiente
+	 * registro con una coincidencia de ID -1
 	 *
 	 * @param s Nombre del usuario
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -58,7 +81,35 @@ public class RAFUsuarios {
 	public static void altaUsuario(String s) throws IOException {
 		try {
 			exceptionLongitudNombre(s);
-			RAFUsuarios.insertarAlFinalFichero(s);
+			int n = CrearArrayDe.buscarUsuarioNulo();
+//			System.out.println(n);
+
+			f = new RandomAccessFile(Const.FUSUARIOS, "rw");
+			// Para el resto de registro se debera hacer un seek para no reemplazxar
+			// resgitros anteriores.
+			// Cambiar a partir de aqui ->
+			Usuario u = new Usuario();
+
+			u.leer(f);
+//			u.mostrarUsuarios();
+			f.seek(0);
+//			System.out.println("Puntero 1: " + f.getFilePointer());
+//			System.out.println("N vale: " + n);
+			f.seek(Usuario.getlongitugRegistroUsuario() * n);
+			
+//			System.out.println("Puntero 2: " + f.getFilePointer());
+			u.leer(f);
+			f.seek(Usuario.getlongitugRegistroUsuario() * n);
+//			System.out.println(u.toString());
+
+			if (u.getId() == -1) {
+				u = new Usuario(s, n);
+				u.escribir(f);
+			}
+//			u.mostrarUsuarios();
+			f.close();
+
+//			RAFUsuarios.insertarAlFinalFichero(s);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -98,7 +149,7 @@ public class RAFUsuarios {
 			RandomAccessFile f = new RandomAccessFile(Const.FUSUARIOS, "r");
 			Usuario u = new Usuario();
 			boolean hayDatos = u.leer(f);
-			f.seek(u.getlongitugRegistroUsuario()); // f.length();
+			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
 
 			while (hayDatos) {
 				u.mostrarUsuarios();
@@ -109,4 +160,27 @@ public class RAFUsuarios {
 		} else
 			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
 	}
+
+	/**
+	 * Baja usuario.
+	 *
+	 * @param id the id
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void bajaUsuario(int id) throws IOException {
+		f = new RandomAccessFile(Const.FUSUARIOS, "rw");
+		irARegistro(f, id, Usuario.getlongitugRegistroUsuario());
+		Usuario u = new Usuario();
+		u.leer(f);
+
+		if (u.getId() != -1) {
+			System.out.println("El usuario " + u.getNombre() + " con el ID " + u.getId() + " ha sido eliminado");
+			u = new Usuario("", -1);
+			irARegistro(f, id, Usuario.getlongitugRegistroUsuario());
+			u.escribir(f);
+		} else
+			System.out.println("El usuario no existe");
+		f.close();
+	}
+
 }

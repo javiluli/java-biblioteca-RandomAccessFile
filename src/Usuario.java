@@ -61,7 +61,7 @@ public class Usuario {
 	 *
 	 * @return the tamano registro
 	 */
-	int getlongitugRegistroUsuario() {
+	public static int getlongitugRegistroUsuario() {
 		return (Const.LONGITUDNOMBRE + 4);
 	}
 
@@ -69,18 +69,17 @@ public class Usuario {
 	 * Gets the tamano registro. Longitud del registro por usuario con sus libros
 	 * prestados
 	 * 
-	 * Const.TAMANONOMBRE = Tamaño del nombre.
+	 * Const.TAMANONOMBRE = Tamaño del nombre = 20 bytes.
 	 * 
-	 * (4 * 2) = 2 int = 8 bytes.
-	 * 
-	 * (Const.LONGITUDTITULO * Const.MAXLIBROSPRES) = 45 byte por libro * 5 libros
-	 * que pueden almacenar.
 	 *
+	 * 
+	 * TOTAL DE LA LONGITUD DEL REGISTRO = 274 bytes
+	 * 
 	 * @return the tamano registro
 	 */
-//	int getlongitugRegistroUsuarioPrestamos() {
-//		return (Const.TAMANONOMBRE + 4 + (getLongitudRegistroLibro() * Const.MAXLIBROSPRES));
-//	}
+	int getlongitugRegistroUsuarioPrestamos() {
+		return (getlongitugRegistroUsuario() + (Libro.getLongitudRegistroLibro() * Const.MAXLIBROSPRES));
+	}
 
 	/**
 	 * Pasar stringa array bytes.
@@ -166,8 +165,7 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [nombre=" + nombre + ", id=" + id + ", librosPrestados=" + Arrays.toString(librosPrestados)
-				+ "]";
+		return "ID: " + id + " | Nombre: " + nombre;
 	}
 
 }
