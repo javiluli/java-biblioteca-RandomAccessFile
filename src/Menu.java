@@ -49,9 +49,15 @@ public class Menu {
 				Backup.backupLibro(Const.FLIBROS, Const.FLIBROSBACKUP);
 				break;
 			case 2:
-				System.out.println("Introducir nombre del usuario: ");
-				RAFUsuarios.altaUsuario(t.leerString().trim().toUpperCase());
-				Backup.backupUsuario(Const.FUSUARIOS, Const.FUSUARIOSBACKUP);
+				int l = RAFUsuarios.contarResgistros();
+				System.out.println(l);
+				System.out.println(Const.MAXUSUARIOS);
+				if (l < Const.MAXUSUARIOS) {
+					System.out.println("Introducir nombre del usuario: ");
+					RAFUsuarios.altaUsuario(t.leerString().trim().toUpperCase());
+					Backup.backupUsuario(Const.FUSUARIOS, Const.FUSUARIOSBACKUP);
+				} else
+					System.out.println("Capacidad maxima de usuarios alcanzada");
 
 				break;
 			case 3:
