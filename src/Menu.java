@@ -13,8 +13,8 @@ public class Menu {
 	 * Opciones menu.
 	 */
 	public static void opcionesMenu() {
-		System.out.println("==================== MENU ====================");
-		System.out.println("______________________________________________");
+		System.out.println("====================== MENU ======================");
+		System.out.println("__________________________________________________");
 		System.out.println("| 1.- Dar de alta un libro");
 		System.out.println("| 2.- Alta de usuarios");
 		System.out.println("| 3.- Baja de usuarios");
@@ -25,7 +25,7 @@ public class Menu {
 		System.out.println("| 8.- Listado de libros no prestados");
 		System.out.println("| 9.- Listado de todos los libros almacenados");
 		System.out.println("| 0.- Salir de la aplicacion");
-		System.out.println("==============================================");
+		System.out.println("==================================================");
 	}
 
 	/**
@@ -45,29 +45,28 @@ public class Menu {
 			n = t.leerInt();
 			switch (n) {
 			case 1:
-				if (RAFLibros.contarResgistros() < Const.MAXLIBROS) {
+				if (RAFLibros.contarResgistrosLibros() < Const.MAXLIBROS) {
 					System.out.println("Introducir titulo del libro: ");
 					RAFLibros.altaLibro(t.leerString().trim().toUpperCase());
 					Backup.backupLibro(Const.FLIBROS, Const.FLIBROSBACKUP);
 				} else
 					System.out.println("Capacidad maxima de libros alcanzada");
 				break;
+
 			case 2:
-				// hacer una busqueda de usuarios con id -1 y si encuentra alguno es que se
-				// puede agregar un suaurio, en caso de encontrar ninguno no se permitira
-				// agregar usuarios
-				System.out.println("Introducir nombre del usuario: ");
-				RAFUsuarios.altaUsuario(t.leerString().trim().toUpperCase());
-				Backup.backupUsuario(Const.FUSUARIOS, Const.FUSUARIOSBACKUP);
-
-//				System.out.println("Capacidad maxima de usuarios alcanzada");
-
+				if (Archivos.contarUsuriosNulos() < 0) {
+					System.out.println("Introducir nombre del usuario: ");
+					RAFUsuarios.altaUsuario(t.leerString().trim().toUpperCase());
+					Backup.backupUsuario(Const.FUSUARIOS, Const.FUSUARIOSBACKUP);
+				} else
+					System.out.println("Capacidad maxima de usuarios alcanzada");
 				break;
+
 			case 3:
 				System.out.println("Introducir ID del usuario para dar de baja: ");
 				RAFUsuarios.bajaUsuario(t.leerInt());
-
 				break;
+
 			case 4:
 //				System.out.println("Codigo del libro");
 //				codigo = t.leerInt();
@@ -83,6 +82,7 @@ public class Menu {
 //					}
 //				}
 				break;
+
 			case 5:
 //				System.out.println("Codigo del libro a buscar");
 //				codigo = t.leerInt();
@@ -97,6 +97,7 @@ public class Menu {
 //					System.out.println("Libro no prestado");
 //				}
 				break;
+
 			case 6:
 //				System.out.println("Codigo del libro a buscar");
 //				codigo = t.leerInt();
@@ -107,15 +108,19 @@ public class Menu {
 //					System.out.println("El libro no se encuntra en prestamo");
 //				}
 				break;
+
 			case 7:
-				RAFUsuarios.mostrarFichero();
+				RAFUsuarios.mostrarFicheroUsuarios();
 				break;
+
 			case 8:
 				RAFLibros.verLibrosNoPrestados();
 				break;
+
 			case 9:
-				RAFLibros.mostrarFichero();
+				RAFLibros.mostrarFicheroLibros();
 				break;
+
 			case 0:
 //			System.out.println("Salir de la aplicacion");
 				break;

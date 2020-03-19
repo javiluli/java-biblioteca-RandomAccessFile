@@ -1,3 +1,8 @@
+
+/**
+ *
+ * @author Javier Delgado Rodriguez
+ */
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -21,9 +26,19 @@ public class Libro {
 	/** The prestado. */
 	boolean prestado;
 
+	/**
+	 * Instantiates a new libro.
+	 */
 	public Libro() {
 	}
 
+	/**
+	 * Instantiates a new libro.
+	 *
+	 * @param codigo   the codigo
+	 * @param titulo   the titulo
+	 * @param prestado the prestado
+	 */
 	public Libro(int codigo, String titulo, boolean prestado) {
 		super();
 		this.codigo = codigo;
@@ -74,6 +89,12 @@ public class Libro {
 		return (sb.toString());
 	}
 
+	/**
+	 * Escribir. Escribe un libro un archivo indicado
+	 *
+	 * @param f the f
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	void escribir(RandomAccessFile f) throws IOException {
 		f.writeInt(codigo);
 		byte tituloAux[];
@@ -82,6 +103,14 @@ public class Libro {
 		f.writeBoolean(prestado);
 	}
 
+	/**
+	 * Leer. Lee los libros almacenados en el fichero, siempre que este fichero
+	 * exista
+	 *
+	 * @param f the f
+	 * @return true, if successful
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	boolean leer(RandomAccessFile f) throws IOException {
 		// devuelve true si lee algo y false si no devuelve nada
 		try {
@@ -102,6 +131,9 @@ public class Libro {
 		}
 	}
 
+	/**
+	 * Mostrar. Muestra los libros por consola
+	 */
 	void mostrar() {
 		System.out.println("codigo: " + codigo + " | prestado: " + (prestado ? "SI" : "NO") + " | titulo: " + titulo);
 	}

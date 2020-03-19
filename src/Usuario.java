@@ -7,7 +7,6 @@
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Arrays;
 
 public class Usuario {
 
@@ -55,9 +54,9 @@ public class Usuario {
 	 * 
 	 * Const.TAMANONOMBRE = Tamaño del nombre.
 	 * 
-	 * 1 int = 4 bytes
+	 * 1 int = 4 Bytes
 	 * 
-	 * TOTAL = 24 bytes
+	 * TOTAL = 24 Bytes
 	 *
 	 * @return the tamano registro
 	 */
@@ -66,16 +65,18 @@ public class Usuario {
 	}
 
 	/**
-	 * Gets the tamano registro. Longitud del registro por usuario con sus libros
-	 * prestados
+	 * Gets the longitug registro usuario prestamos.Longitud del registro por
+	 * usuario con sus libros prestados
 	 * 
-	 * Const.TAMANONOMBRE = Tamaño del nombre = 20 bytes.
+	 * getlongitugRegistroUsuario() = Tamaño por usuario = 24 Bytes
 	 * 
+	 * Libro.getLongitudRegistroLibro() = 50 Bytes
+	 * 
+	 * Libro.getLongitudRegistroLibro() * Const.MAXLIBROSPRES(5) = 250 Bytes
+	 * 
+	 * TOTAL DE LA LONGITUD DEL REGISTRO = 274 Bytes
 	 *
-	 * 
-	 * TOTAL DE LA LONGITUD DEL REGISTRO = 274 bytes
-	 * 
-	 * @return the tamano registro
+	 * @return the longitug registro usuario prestamos
 	 */
 	int getlongitugRegistroUsuarioPrestamos() {
 		return (getlongitugRegistroUsuario() + (Libro.getLongitudRegistroLibro() * Const.MAXLIBROSPRES));
@@ -135,34 +136,72 @@ public class Usuario {
 		}
 	}
 
+	/**
+	 * Mostrar usuarios.
+	 */
 	void mostrarUsuarios() {
 		System.out.println("ID: " + id + " | Nombre: " + nombre);
 	}
 
+	/**
+	 * Gets the nombre.
+	 *
+	 * @return the nombre
+	 */
 	public String getNombre() {
 		return nombre;
 	}
 
+	/**
+	 * Sets the nombre.
+	 *
+	 * @param nombre the new nombre
+	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the libros prestados.
+	 *
+	 * @return the libros prestados
+	 */
 	public Libro[] getLibrosPrestados() {
 		return librosPrestados;
 	}
 
+	/**
+	 * Sets the libros prestados.
+	 *
+	 * @param librosPrestados the new libros prestados
+	 */
 	public void setLibrosPrestados(Libro[] librosPrestados) {
 		this.librosPrestados = librosPrestados;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return "ID: " + id + " | Nombre: " + nombre;

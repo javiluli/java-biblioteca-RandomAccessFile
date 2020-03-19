@@ -12,30 +12,6 @@ public class RAFLibros {
 	static RandomAccessFile f;
 
 	/**
-	 * Exception longitud titulo. Genera una excepcion cuando la longitud del ttulo
-	 * sea mayo de la establecida en Const.LONGITUDTITULO
-	 * 
-	 * @param s the s
-	 * @throws Exception the exception
-	 */
-	public static void exceptionLongitudTitulo(String s) throws Exception {
-		if (s.length() >= Const.LONGITUDTITULO)
-			throw new Exception("El titulo del libro excede la longitud permitida (45 caracteres)");
-	}
-
-	/**
-	 * Permite ir de manera directa al libro deseado
-	 *
-	 * @param f      the f
-	 * @param pos    the pos
-	 * @param tamReg the tam reg
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void irARegistro(RandomAccessFile f, int pos, int tamReg) throws IOException {
-		f.seek(pos * tamReg);
-	}
-
-	/**
 	 * Agrega un libro al final del fichero
 	 *
 	 * @param s Titulo del libro
@@ -43,7 +19,7 @@ public class RAFLibros {
 	 */
 	public static void insertarAlFinalFichero(String s) throws IOException {
 		f = new RandomAccessFile(Const.FLIBROS, "rw");
-		int n = contarResgistros();
+		int n = contarResgistrosLibros();
 		Libro l = new Libro((n), s.toUpperCase(), false);
 		f.seek(Libro.getLongitudRegistroLibro() * n);
 		l.escribir(f);
@@ -58,7 +34,7 @@ public class RAFLibros {
 	 */
 	public static void altaLibro(String s) throws IOException {
 		try {
-			exceptionLongitudTitulo(s);
+			Archivos.exceptionLongitudMaxima(s, Const.LONGITUDTITULO);
 			RAFLibros.insertarAlFinalFichero(s);
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -71,7 +47,7 @@ public class RAFLibros {
 	 * @return the int
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static int contarResgistros() throws IOException {
+	public static int contarResgistrosLibros() throws IOException {
 		int n = 0;
 		// Comprobar antes si existe el fichero.
 		if (new File(Const.FLIBROS).isFile()) {
@@ -100,7 +76,7 @@ public class RAFLibros {
 			RandomAccessFile f = new RandomAccessFile(Const.FLIBROS, "r");
 			Libro l = new Libro();
 			boolean hayDatos = l.leer(f);
-			f.seek(l.getLongitudRegistroLibro()); // f.length();
+			f.seek(Libro.getLongitudRegistroLibro()); // f.length();
 
 			while (hayDatos) {
 				if (!l.prestado)
@@ -118,13 +94,13 @@ public class RAFLibros {
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void mostrarFichero() throws IOException {
+	public static void mostrarFicheroLibros() throws IOException {
 		// Comprobar antes si existe el fichero.
 		if (new File(Const.FLIBROS).isFile()) {
 			RandomAccessFile f = new RandomAccessFile(Const.FLIBROS, "r");
 			Libro l = new Libro();
 			boolean hayDatos = l.leer(f);
-			f.seek(l.getLongitudRegistroLibro()); // f.length();
+			f.seek(Libro.getLongitudRegistroLibro()); // f.length();
 
 			while (hayDatos) {
 				l.mostrar();
