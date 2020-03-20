@@ -1,3 +1,4 @@
+package MetLibro;
 
 /**
  *
@@ -6,6 +7,8 @@
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import Recursos.Const;
 
 /**
  *
@@ -24,7 +27,7 @@ public class Libro {
 	public String titulo;
 
 	/** The prestado. */
-	boolean prestado;
+	public boolean prestado;
 
 	/**
 	 * Instantiates a new libro.
@@ -55,7 +58,7 @@ public class Libro {
 	 *
 	 * @return the tamano registro
 	 */
-	static int getLongitudRegistroLibro() {
+	public static int getLongitudRegistroLibro() {
 		return (Const.LONGITUDTITULO + 4 + 1);
 	}
 
@@ -95,7 +98,7 @@ public class Libro {
 	 * @param f the f
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	void escribir(RandomAccessFile f) throws IOException {
+	public void escribir(RandomAccessFile f) throws IOException {
 		f.writeInt(codigo);
 		byte tituloAux[];
 		tituloAux = pasarStringaArrayBytes(titulo);
@@ -111,7 +114,7 @@ public class Libro {
 	 * @return true, if successful
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	boolean leer(RandomAccessFile f) throws IOException {
+	public boolean leer(RandomAccessFile f) throws IOException {
 		// devuelve true si lee algo y false si no devuelve nada
 		try {
 			codigo = f.readInt();
@@ -134,7 +137,7 @@ public class Libro {
 	/**
 	 * Mostrar. Muestra los libros por consola
 	 */
-	void mostrar() {
+	public void mostrar() {
 		System.out.println("codigo: " + codigo + " | prestado: " + (prestado ? "SI" : "NO") + " | titulo: " + titulo);
 	}
 

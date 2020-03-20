@@ -1,3 +1,4 @@
+package Recursos;
 
 /**
  *
@@ -7,6 +8,9 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import MetLibro.Libro;
+import MetUsuario.Usuario;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,7 +46,7 @@ public class Backup {
 			RandomAccessFile f = new RandomAccessFile(Const.FLIBROS, "r");
 			Libro l = new Libro();
 			boolean hayDatos = l.leer(f);
-			f.seek(l.getLongitudRegistroLibro()); // f.length();
+			f.seek(Libro.getLongitudRegistroLibro()); // f.length();
 
 			while (hayDatos) {
 				l.escribir(faux);
@@ -70,7 +74,7 @@ public class Backup {
 			RandomAccessFile f = new RandomAccessFile(Const.FUSUARIOS, "r");
 			Usuario u = new Usuario();
 			boolean hayDatos = u.leer(f);
-			f.seek(u.getlongitugRegistroUsuario()); // f.length();
+			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
 
 			while (hayDatos) {
 				u.escribir(faux);

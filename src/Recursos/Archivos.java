@@ -1,3 +1,4 @@
+package Recursos;
 
 /**
  *
@@ -6,6 +7,8 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import MetUsuario.Usuario;
 
 public class Archivos {
 
@@ -124,5 +127,4 @@ public class Archivos {
 
 		return n;
 	}
-
 }

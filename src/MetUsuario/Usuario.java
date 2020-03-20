@@ -1,3 +1,4 @@
+package MetUsuario;
 
 /**
  *
@@ -7,6 +8,9 @@
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import MetLibro.Libro;
+import Recursos.Const;
 
 public class Usuario {
 
@@ -112,14 +116,27 @@ public class Usuario {
 		return (sb.toString());
 	}
 
-	void escribir(RandomAccessFile f) throws IOException {
+	/**
+	 * Escribir. Permite escribir un usurio en un fichero de datos
+	 *
+	 * @param f the f
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void escribir(RandomAccessFile f) throws IOException {
 		byte nombreBusuario[];
 		nombreBusuario = pasarStringaArrayBytes(nombre);
 		f.write(nombreBusuario);
 		f.writeInt(id);
 	}
 
-	boolean leer(RandomAccessFile f) throws IOException {
+	/**
+	 * Leer. Lee los usuarios almacenados en un fichero de datos
+	 *
+	 * @param f the f
+	 * @return true, if successful
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public boolean leer(RandomAccessFile f) throws IOException {
 		// devuelve true si lee algo y false si no devuelve nada
 		try {
 			byte nombreB[] = new byte[Const.LONGITUDNOMBRE];

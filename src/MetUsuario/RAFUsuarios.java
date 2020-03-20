@@ -1,3 +1,4 @@
+package MetUsuario;
 
 /**
  *
@@ -6,6 +7,10 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import Recursos.Archivos;
+import Recursos.Const;
+import Recursos.CrearArrayDe;
 
 public class RAFUsuarios {
 	static RandomAccessFile f;

@@ -1,3 +1,4 @@
+package MetLibro;
 
 /**
  *
@@ -6,6 +7,9 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import Recursos.Archivos;
+import Recursos.Const;
 
 public class RAFLibros {
 	/** The f. */

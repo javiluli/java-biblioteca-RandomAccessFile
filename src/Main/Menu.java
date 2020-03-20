@@ -1,3 +1,11 @@
+package Main;
+
+import MetLibro.RAFLibros;
+import MetUsuario.RAFUsuarios;
+import Recursos.Archivos;
+import Recursos.Backup;
+import Recursos.Const;
+import Recursos.Teclado;
 
 /**
  *
@@ -54,7 +62,7 @@ public class Menu {
 				break;
 
 			case 2:
-				if (Archivos.contarUsuriosNulos() < 0) {
+				if (Archivos.contarUsuriosNulos() < Const.MAXUSUARIOS) {
 					System.out.println("Introducir nombre del usuario: ");
 					RAFUsuarios.altaUsuario(t.leerString().trim().toUpperCase());
 					Backup.backupUsuario(Const.FUSUARIOS, Const.FUSUARIOSBACKUP);

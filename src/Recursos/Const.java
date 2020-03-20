@@ -1,3 +1,4 @@
+package Recursos;
 /**
  *
  * @author Javier Delgado Rodriguez
@@ -12,7 +13,7 @@ public class Const {
 	// ######################################
 
 	/** Longitud maxima que puede tener el nombre de un usuario */
-	final static int LONGITUDNOMBRE = 20;
+	public final static int LONGITUDNOMBRE = 20;
 
 	/** Cantidad maxima de usuarios que almacena la biblioteca */
 	public final static int MAXUSUARIOS = 25;
@@ -37,7 +38,7 @@ public class Const {
 	// ######################################
 
 	/** Longitud maxima que puede tener el titulo de un libro */
-	final static int LONGITUDTITULO = 45;
+	public final static int LONGITUDTITULO = 45;
 
 	/** Cantidad maxima de libros almacenados en la biblioteca */
 	public final static int MAXLIBROS = 100;

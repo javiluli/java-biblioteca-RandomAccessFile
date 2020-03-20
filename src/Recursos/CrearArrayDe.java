@@ -1,3 +1,4 @@
+package Recursos;
 
 /**
  *
@@ -5,6 +6,9 @@
  */
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import MetLibro.Libro;
+import MetUsuario.Usuario;
 
 // TODO: Auto-generated Javadoc
 /**

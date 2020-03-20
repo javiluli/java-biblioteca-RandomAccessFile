@@ -1,3 +1,4 @@
+package Recursos;
 
 
 /**
@@ -6,7 +7,7 @@
 */
 import java.io.*;
 
-class Teclado {
+public class Teclado {
 	/**
 	 * Lee un caracter y elimina del buffer de teclado todos los que est�n en esa
 	 * l�nea, incluido el final de la l�nea.
@@ -45,7 +46,7 @@ class Teclado {
 	 * @throws IOException
 	 * @return int
 	 */
-	int leerInt() throws IOException {
+	public int leerInt() throws IOException {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		String s;
@@ -84,7 +85,7 @@ class Teclado {
 	 * @throws IOException
 	 * @return String
 	 */
-	String leerString() throws IOException {
+	public String leerString() throws IOException {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		String s = br.readLine();
