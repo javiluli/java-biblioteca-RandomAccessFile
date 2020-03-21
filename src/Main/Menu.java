@@ -1,16 +1,18 @@
-package Main;
-
-import MetLibro.RAFLibros;
-import MetUsuario.RAFUsuarios;
-import Recursos.Archivos;
-import Recursos.Backup;
-import Recursos.Const;
-import Recursos.Teclado;
-
 /**
  *
  * @author Javier Delgado Rodriguez
  */
+package Main;
+
+import java.io.IOException;
+
+import MetLibro.RAFLibros;
+import MetUsuario.RAFUsuarios;
+import PrestamoLibro.Prestamo;
+import Recursos.Archivos;
+import Recursos.Backup;
+import Recursos.Const;
+import Recursos.Teclado;
 
 /**
  * The Class Menu.
@@ -37,102 +39,71 @@ public class Menu {
 	}
 
 	/**
-	 * Menu.
+	 * Guardar libro.
+	 *
+	 * @param s the s
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void guardarLibro(String s) throws IOException {
+		if (RAFLibros.contarResgistrosLibros() < Const.MAXLIBROS) {
+			System.out.println("Introducir titulo del libro: ");
+			RAFLibros.altaLibro(s.trim().toUpperCase());
+			Backup.backupLibro(Const.FLIBROS, Const.FLIBROSBACKUP);
+		} else
+			System.out.println("Capacidad maxima de libros alcanzada");
+	}
+
+	/**
+	 * Guardar usuario.
+	 *
+	 * @param s the s
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void guardarUsuario(String s) throws IOException {
+		if (Archivos.contarUsuriosNulos() < Const.MAXUSUARIOS) {
+			System.out.println("Introducir nombre del usuario: ");
+			RAFUsuarios.altaUsuario(s.trim().toUpperCase());
+			Backup.backupUsuario(Const.FUSUARIOS, Const.FUSUARIOSBACKUP);
+		} else
+			System.out.println("Capacidad maxima de usuarios alcanzada");
+	}
+
+	/**
+	 * Borrar usuario.
+	 *
+	 * @param n the n
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void borrarUsuario(int n) throws IOException {
+		System.out.println("Introducir ID del usuario para dar de baja: ");
+		RAFUsuarios.bajaUsuario(n);
+	}
+
+	/**
+	 * Prestar libro A usuario.
 	 *
 	 * @throws Exception the exception
 	 */
-	public void menu() throws Exception {
+	public static void prestarLibroAUsuario() throws Exception {
 		Teclado t = new Teclado();
-		int n;
-		Archivos.CrearFichero();
-		System.out.println();
+		int id, codigo;
+		// Es necesario controlar que se no se preste libros a un usuario que no existe
+		// Es necsario controlar que no se permita prestas un libro que no existe
+		System.out.println("Codigo del libro");
+		codigo = t.leerInt();
+		boolean vp = Prestamo.vefificarPrestamo(codigo);
 
-		// =============================================
-		do {
-			opcionesMenu();
-			n = t.leerInt();
-			switch (n) {
-			case 1:
-				if (RAFLibros.contarResgistrosLibros() < Const.MAXLIBROS) {
-					System.out.println("Introducir titulo del libro: ");
-					RAFLibros.altaLibro(t.leerString().trim().toUpperCase());
-					Backup.backupLibro(Const.FLIBROS, Const.FLIBROSBACKUP);
-				} else
-					System.out.println("Capacidad maxima de libros alcanzada");
-				break;
+		if (!vp) {
+			System.out.println("ID del usuario");
+			id = t.leerInt();
 
-			case 2:
-				if (Archivos.contarUsuriosNulos() < Const.MAXUSUARIOS) {
-					System.out.println("Introducir nombre del usuario: ");
-					RAFUsuarios.altaUsuario(t.leerString().trim().toUpperCase());
-					Backup.backupUsuario(Const.FUSUARIOS, Const.FUSUARIOSBACKUP);
-				} else
-					System.out.println("Capacidad maxima de usuarios alcanzada");
-				break;
+			boolean rp = Prestamo.recuentoPrestamoUsuario(id);
 
-			case 3:
-				System.out.println("Introducir ID del usuario para dar de baja: ");
-				RAFUsuarios.bajaUsuario(t.leerInt());
-				break;
-
-			case 4:
-//				System.out.println("Codigo del libro");
-//				codigo = t.leerInt();
-//				boolean vp = PrestamoLibro.verificarPrestamo(codigo);
-//				System.out.println(vp);
-//				if (!vp) {
-//					System.out.println("ID del usuario");
-//					id = t.leerInt();
-//					boolean rp = pl.recuentoPrestamo(id);
-//
-//					if (!vp && rp) {
-//						pl.prestarLibro(id, codigo);
-//					}
-//				}
-				break;
-
-			case 5:
-//				System.out.println("Codigo del libro a buscar");
-//				codigo = t.leerInt();
-//				vp = PrestamoLibro.verificarPrestamo(codigo);
-//				System.out.println(vp);
-
-//				if (vp) {
-//					System.out.println("ID del usuario");
-//					id = t.leerInt();
-//					DevolverLibro.devolucionLibro(codigo, id);
-//				} else {
-//					System.out.println("Libro no prestado");
-//				}
-				break;
-
-			case 6:
-//				System.out.println("Codigo del libro a buscar");
-//				codigo = t.leerInt();
-//				vp = PrestamoLibro.verificarPrestamo(codigo);
-//				if (vp)
-//					Book.solicitarLibro(codigo);
-//				else {
-//					System.out.println("El libro no se encuntra en prestamo");
-//				}
-				break;
-
-			case 7:
-				RAFUsuarios.mostrarFicheroUsuarios();
-				break;
-
-			case 8:
-				RAFLibros.verLibrosNoPrestados();
-				break;
-
-			case 9:
-				RAFLibros.mostrarFicheroLibros();
-				break;
-
-			case 0:
-//			System.out.println("Salir de la aplicacion");
-				break;
+			if (!vp && rp) {
+				Prestamo.prestarLibro(codigo);
+				Prestamo.almacenarUsuariosYPrestamos(id, codigo);
 			}
-		} while (n != 0);
+		}
+		Prestamo.mostrarPrestamosNulos();
 	}
 }

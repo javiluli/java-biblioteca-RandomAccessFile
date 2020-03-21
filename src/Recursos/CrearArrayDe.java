@@ -1,3 +1,7 @@
+/**
+ *
+ * @author Javier Delgado Rodriguez
+ */
 package Recursos;
 
 /**
@@ -44,6 +48,12 @@ public class CrearArrayDe {
 		return usuarios;
 	}
 
+	/**
+	 * Buscar usuario nulo.
+	 *
+	 * @return the int
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static int buscarUsuarioNulo() throws IOException {
 		Usuario[] v = CrearArrayDe.crearArrayUsuarios();
 		for (int i = 0; i < v.length; i++)
@@ -77,4 +87,5 @@ public class CrearArrayDe {
 //		}
 		return libros;
 	}
+
 }

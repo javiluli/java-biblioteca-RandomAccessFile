@@ -137,7 +137,7 @@ public class Libro {
 	/**
 	 * Mostrar. Muestra los libros por consola
 	 */
-	public void mostrar() {
+	public void mostrarLibro() {
 		System.out.println("codigo: " + codigo + " | prestado: " + (prestado ? "SI" : "NO") + " | titulo: " + titulo);
 	}
 

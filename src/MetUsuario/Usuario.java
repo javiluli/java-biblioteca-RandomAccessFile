@@ -82,7 +82,7 @@ public class Usuario {
 	 *
 	 * @return the longitug registro usuario prestamos
 	 */
-	int getlongitugRegistroUsuarioPrestamos() {
+	public static int getlongitugRegistroUsuarioPrestamos() {
 		return (getlongitugRegistroUsuario() + (Libro.getLongitudRegistroLibro() * Const.MAXLIBROSPRES));
 	}
 
@@ -156,7 +156,7 @@ public class Usuario {
 	/**
 	 * Mostrar usuarios.
 	 */
-	void mostrarUsuarios() {
+	public void mostrarUsuario() {
 		System.out.println("ID: " + id + " | Nombre: " + nombre);
 	}
 

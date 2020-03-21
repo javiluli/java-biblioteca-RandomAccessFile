@@ -1,3 +1,7 @@
+/**
+ *
+ * @author Javier Delgado Rodriguez
+ */
 package Recursos;
 /**
  *
@@ -58,5 +62,10 @@ public class Const {
 
 	/** Conexion con el archivo de backup de libros almacenados en la biblioteca */
 	public final static String FLIBROSBACKUP = "datos\\datosLibros_backup.dat";
+
+	/**
+	 * Conexion con el archivo que almacena tanto usuarios como sus libris prestados
+	 */
+	public final static String FPRESTAMOS = "datos\\datosPrestamos.dat";
 
 }

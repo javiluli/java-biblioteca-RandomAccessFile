@@ -32,7 +32,7 @@ public class RAFUsuarios {
 
 			Archivos.retrocederRegistroUsurio(f, n, Usuario.getlongitugRegistroUsuario(), u);
 
-			// si en diha posicion el usuario tine eun ID -1 se permitira la escritura de
+			// si en dicha posicion el usuario tiene un ID -1 se permitira la escritura de
 			// uno nuevo
 			if (u.getId() == -1) {
 				u = new Usuario(s, n);
@@ -82,7 +82,7 @@ public class RAFUsuarios {
 			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
 
 			while (hayDatos) {
-				u.mostrarUsuarios();
+				u.mostrarUsuario();
 				hayDatos = u.leer(f);
 			}
 

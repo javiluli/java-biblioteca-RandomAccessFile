@@ -1,13 +1,14 @@
-package Recursos;
-
 /**
  *
  * @author Javier Delgado Rodriguez
  */
+package Recursos;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import MetLibro.Libro;
 import MetUsuario.Usuario;
 
 public class Archivos {
@@ -66,9 +67,9 @@ public class Archivos {
 	 * Crear fichero. Creara un fichero llamado FLIBROS y FUSUARIOS en el caso de
 	 * que alguno de estos no exista
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
 	 */
-	public static void CrearFichero() throws IOException {
+	public static void crearFichero() throws Exception {
 		File f = new File(Const.FLIBROS);
 		if (!f.exists())
 			f.createNewFile();
@@ -76,6 +77,11 @@ public class Archivos {
 		if (!f.exists()) {
 			f.createNewFile();
 			usuariosNulos();
+		}
+		f = new File(Const.FPRESTAMOS);
+		if (!f.exists()) {
+			f.createNewFile();
+			escribirPrestamosNulos();
 		}
 	}
 
@@ -92,6 +98,28 @@ public class Archivos {
 		while (n < Const.MAXUSUARIOS) {
 			f.seek(Usuario.getlongitugRegistroUsuario() * n);
 			u.escribir(f);
+			n++;
+		}
+		f.close();
+	}
+
+	/**
+	 * Escribir prestamos nulos. Genera un fichero con todos los usuarios y sus
+	 * libros que pueden toma rprestados pero con valores nulos
+	 *
+	 * @throws Exception the exception
+	 */
+	public static void escribirPrestamosNulos() throws Exception {
+		RandomAccessFile f = new RandomAccessFile(Const.FPRESTAMOS, "rw");
+		int n = 0;
+		Usuario u = new Usuario("", -1);
+		while (n < Const.MAXUSUARIOS) {
+			f.seek(Usuario.getlongitugRegistroUsuarioPrestamos() * n);
+			u.escribir(f);
+			Libro l = new Libro(-1, "", false);
+			for (int i = 0; i < Const.MAXLIBROSPRES; i++) {
+				l.escribir(f);
+			}
 			n++;
 		}
 		f.close();

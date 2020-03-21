@@ -84,7 +84,7 @@ public class RAFLibros {
 
 			while (hayDatos) {
 				if (!l.prestado)
-					l.mostrar();
+					l.mostrarLibro();
 				hayDatos = l.leer(f);
 			}
 
@@ -107,7 +107,7 @@ public class RAFLibros {
 			f.seek(Libro.getLongitudRegistroLibro()); // f.length();
 
 			while (hayDatos) {
-				l.mostrar();
+				l.mostrarLibro();
 				hayDatos = l.leer(f);
 			}
 
