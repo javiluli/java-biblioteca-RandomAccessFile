@@ -173,20 +173,17 @@ public class Prestamo {
 		if (new File(Const.FPRESTAMOS).isFile()) {
 			int n = Prestamo.primerLibroPrestadoNulo(id);
 			f = new RandomAccessFile(Const.FPRESTAMOS, "rw");
-			Usuario[] vUsuarios = CrearArrayDe.crearArrayUsuarios();
-			Libro[] vLibros = CrearArrayDe.crearArrayLibros();
 
 			// muevo el puntero hasta el usaurio deseado y asigno en el fichero dicho
 			// usuario
 			Archivos.irARegistro(f, id, Usuario.getlongitugRegistroUsuarioPrestamos());
-			Usuario u = new Usuario();
-			u.setId(id);
-			u.setNombre(vUsuarios[id].getNombre());
+			Usuario[] vUsuarios = CrearArrayDe.crearArrayUsuarios();
+			Usuario u = new Usuario(vUsuarios[id].getNombre(), id);
 			u.escribir(f);
 
 			// almaceno en FP la posicion actial del puntero para seguir en el usuario pero
 			// solo para accder de forma directa a los libros prestados
-			Libro l = new Libro();
+			Libro[] vLibros = CrearArrayDe.crearArrayLibros();
 			int fp = (int) f.getFilePointer();
 
 			// fp |> posicion del puntero en el fichero justo despues de leer el usuario
@@ -194,10 +191,7 @@ public class Prestamo {
 			// n |> posicion del primer espacio nulo en sus libros prestados
 			// Libro.getLongitudRegistroLibro() |> longitus en bytes de un Object Libro
 			f.seek(fp + (n * Libro.getLongitudRegistroLibro()));
-
-			l.codigo = codigo;
-			l.titulo = vLibros[codigo].titulo;
-			l.prestado = true;
+			Libro l = new Libro(codigo, vLibros[codigo].titulo, true);
 			l.escribir(f);
 
 			f.close();
@@ -205,4 +199,25 @@ public class Prestamo {
 			System.out.println("El Fichero no existe - ERROR EN: contarResgistros");
 	}
 
+	public static void mostrarPrestamos() throws IOException {
+		// Comprobar antes si existe el fichero.
+		if (new File(Const.FPRESTAMOS).isFile()) {
+			RandomAccessFile f = new RandomAccessFile(Const.FPRESTAMOS, "r");
+			Usuario u = new Usuario();
+			boolean hayDatos = u.leer(f);
+//			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
+
+			while (hayDatos) {
+				u.mostrarUsuario();
+				Libro l = new Libro();
+				for (int i = 0; i < Const.MAXLIBROSPRES; i++) {
+					l.leer(f);
+					l.mostrarLibro();
+				}
+				hayDatos = u.leer(f);
+			}
+			f.close();
+		} else
+			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
+	}
 }

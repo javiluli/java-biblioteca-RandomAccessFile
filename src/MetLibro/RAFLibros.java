@@ -80,7 +80,7 @@ public class RAFLibros {
 			RandomAccessFile f = new RandomAccessFile(Const.FLIBROS, "r");
 			Libro l = new Libro();
 			boolean hayDatos = l.leer(f);
-			f.seek(Libro.getLongitudRegistroLibro()); // f.length();
+//			f.seek(Libro.getLongitudRegistroLibro()); // f.length();
 
 			while (hayDatos) {
 				if (!l.prestado)

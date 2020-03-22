@@ -6,6 +6,7 @@ package Main;
 
 import MetLibro.RAFLibros;
 import MetUsuario.RAFUsuarios;
+import PrestamoLibro.Prestamo;
 import Recursos.Archivos;
 import Recursos.Teclado;
 
@@ -76,6 +77,7 @@ public class Main {
 
 			case 7:
 				RAFUsuarios.mostrarFicheroUsuarios();
+//				Prestamo.mostrarPrestamos();
 				break;
 
 			case 8:

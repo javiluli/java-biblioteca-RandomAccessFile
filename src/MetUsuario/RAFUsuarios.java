@@ -79,7 +79,7 @@ public class RAFUsuarios {
 			RandomAccessFile f = new RandomAccessFile(Const.FUSUARIOS, "r");
 			Usuario u = new Usuario();
 			boolean hayDatos = u.leer(f);
-			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
+//			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
 
 			while (hayDatos) {
 				u.mostrarUsuario();
