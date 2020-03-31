@@ -68,4 +68,10 @@ public class Const {
 	 */
 	public final static String FPRESTAMOS = "datos\\datosPrestamos.dat";
 
+	/**
+	 * Fichero de almacenamiendo de libro por usuario, acceso directo al prestamo
+	 * del libro y el usuario que lo tiene.
+	 */
+	public final static String FLIBROASIGNADOA = "datos\\librosAsignados.dat";
+
 }

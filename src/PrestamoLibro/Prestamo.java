@@ -19,7 +19,8 @@ public class Prestamo {
 	static RandomAccessFile f;
 
 	/**
-	 * Vefificar prestamo.
+	 * Vefificar prestamo. Comprueba si el libro solivitado se encuentra en
+	 * prestamos o no.
 	 *
 	 * @param codigo the codigo
 	 * @return true, if successful

@@ -10,6 +10,7 @@ import java.io.RandomAccessFile;
 
 import MetLibro.Libro;
 import MetUsuario.Usuario;
+import PrestamoLibro.LibroAsignadoA;
 
 public class Archivos {
 
@@ -58,8 +59,17 @@ public class Archivos {
 		// busco el primer usuario no valido de la lista, con un ID -1
 		f.seek(longReg * pos);
 
-		// leo la posicion del usuario y retrocedo para permanecer en el m,ismo lugar
+		// leo la posicion del usuario y retrocedo para permanecer en el mmismo lugar
 		u.leer(f);
+		f.seek(longReg * pos);
+	}
+
+	public static void retrocederRegistroLibro(RandomAccessFile f, int pos, int longReg, Libro l) throws IOException {
+		// busco el primer usuario no valido de la lista, con un ID -1
+		f.seek(longReg * pos);
+
+		// leo la posicion del usuario y retrocedo para permanecer en el mmismo lugar
+		l.leer(f);
 		f.seek(longReg * pos);
 	}
 
@@ -82,6 +92,12 @@ public class Archivos {
 		if (!f.exists()) {
 			f.createNewFile();
 			escribirPrestamosNulos();
+		}
+		f = new File(Const.FLIBROASIGNADOA);
+		if (!f.exists()) {
+			f.createNewFile();
+			LibroAsignadoA.LisbrosAsignadosNulos();
+
 		}
 	}
 
@@ -143,7 +159,7 @@ public class Archivos {
 			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
 
 			while (hayDatos) {
-				if (u.getId() == -1)
+				if (u.getId() != -1)
 					n++;
 
 				hayDatos = u.leer(f);

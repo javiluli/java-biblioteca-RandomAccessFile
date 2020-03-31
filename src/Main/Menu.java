@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import MetLibro.RAFLibros;
 import MetUsuario.RAFUsuarios;
+import PrestamoLibro.LibroAsignadoA;
 import PrestamoLibro.Prestamo;
 import Recursos.Archivos;
 import Recursos.Backup;
@@ -18,6 +19,7 @@ import Recursos.Teclado;
  * The Class Menu.
  */
 public class Menu {
+	static Teclado t = new Teclado();
 
 	/**
 	 * Opciones menu.
@@ -28,12 +30,13 @@ public class Menu {
 		System.out.println("| 1.- Dar de alta un libro");
 		System.out.println("| 2.- Alta de usuarios");
 		System.out.println("| 3.- Baja de usuarios");
-//		System.out.println("| 4.- Préstamo de libros");
+		System.out.println("| 4.- Préstamo de libros");
 //		System.out.println("| 5.- Devolución de libro");
 //		System.out.println("| 6.- Consulta de un libro");
 		System.out.println("| 7.- Listado de usuarios");
 		System.out.println("| 8.- Listado de libros no prestados");
 		System.out.println("| 9.- Listado de todos los libros almacenados");
+		System.out.println("| 10.- Listado de los prestamos");
 		System.out.println("| 0.- Salir de la aplicacion");
 		System.out.println("==================================================");
 	}
@@ -44,10 +47,10 @@ public class Menu {
 	 * @param s the s
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void guardarLibro(String s) throws IOException {
+	public static void guardarLibro() throws IOException {
 		if (RAFLibros.contarResgistrosLibros() < Const.MAXLIBROS) {
 			System.out.println("Introducir titulo del libro: ");
-			RAFLibros.altaLibro(s.trim().toUpperCase());
+			RAFLibros.altaLibro(t.leerString().trim().toUpperCase());
 			Backup.backupLibro(Const.FLIBROS, Const.FLIBROSBACKUP);
 		} else
 			System.out.println("Capacidad maxima de libros alcanzada");
@@ -59,10 +62,10 @@ public class Menu {
 	 * @param s the s
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void guardarUsuario(String s) throws IOException {
+	public static void guardarUsuario() throws IOException {
 		if (Archivos.contarUsuriosNulos() < Const.MAXUSUARIOS) {
 			System.out.println("Introducir nombre del usuario: ");
-			RAFUsuarios.altaUsuario(s.trim().toUpperCase());
+			RAFUsuarios.altaUsuario(t.leerString().trim().toUpperCase());
 			Backup.backupUsuario(Const.FUSUARIOS, Const.FUSUARIOSBACKUP);
 		} else
 			System.out.println("Capacidad maxima de usuarios alcanzada");
@@ -71,11 +74,12 @@ public class Menu {
 	/**
 	 * Borrar usuario.
 	 *
-	 * @param n the n
+	 * @param N the n
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void borrarUsuario(int n) throws IOException {
+	public static void borrarUsuario() throws IOException {
 		System.out.println("Introducir ID del usuario para dar de baja: ");
+		int n = t.leerInt();
 		RAFUsuarios.bajaUsuario(n);
 	}
 
@@ -102,8 +106,8 @@ public class Menu {
 			if (!vp && rp) {
 				Prestamo.prestarLibro(codigo);
 				Prestamo.almacenarUsuariosYPrestamos(id, codigo);
+				LibroAsignadoA.guardarAsignacion(id, codigo);
 			}
 		}
-		Prestamo.mostrarPrestamosNulos();
 	}
 }
