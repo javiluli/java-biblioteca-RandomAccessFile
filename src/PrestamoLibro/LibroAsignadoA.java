@@ -1,6 +1,9 @@
+/**
+ *
+ * @author Javier Delgado Rodriguez
+ */
 package PrestamoLibro;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -10,70 +13,67 @@ import Recursos.Archivos;
 import Recursos.Const;
 import Recursos.CrearArrayDe;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LibroAsignadoA.
+ */
 public class LibroAsignadoA {
+
+	/** The f. */
 	static RandomAccessFile f;
-	public final static int N = Usuario.getlongitugRegistroUsuario() + Libro.getLongitudRegistroLibro();
 
-	public static void LisbrosAsignadosNulos() throws IOException {
-		// Comprobar antes si existe el fichero.
-		if (new File(Const.FLIBROASIGNADOA).isFile()) {
-			f = new RandomAccessFile(Const.FLIBROASIGNADOA, "rw");
-
-			Usuario u = new Usuario("", -1);
-			Libro l = new Libro(-1, "", false);
-			for (int i = 0; i < Const.MAXLIBROS; i++) {
-				f.seek(i * N);
-				l.escribir(f);
-				u.escribir(f);
-			}
-			f.close();
-		} else
-			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
-
-	}
-
+	/**
+	 * Guardar asignacion. Permite guardar una asignacion direta de Libro -> Usuario
+	 * de forma directa basando la posicion en el codigo del Libro.
+	 *
+	 * @param id     the id
+	 * @param codigo the codigo
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void guardarAsignacion(int id, int codigo) throws IOException {
-		if (new File(Const.FLIBROASIGNADOA).isFile()) {
-			f = new RandomAccessFile(Const.FLIBROASIGNADOA, "rw");
-			Archivos.irARegistro(f, codigo, N);
 
-			Libro[] vLibros = CrearArrayDe.crearArrayLibros();
-			Libro l = new Libro(codigo, vLibros[codigo].titulo, true);
-			l.escribir(f);
-			l.mostrarLibro();
+		f = new RandomAccessFile(Const.FLIBROASIGNADOA, "rw");
+		// posicion en Bytes del guardado de la asignacion Libro -> Usuario
+		Archivos.irARegistro(f, codigo, Const.N);
 
-			Usuario[] vUsuarios = CrearArrayDe.crearArrayUsuarios();
-			Usuario u = new Usuario(vUsuarios[id].getNombre(), id);
-			u.escribir(f);
-			u.mostrarUsuario();
+		Libro[] vLibros = CrearArrayDe.crearArrayLibros();
+		Libro l = new Libro(codigo, vLibros[codigo].titulo, true);
+		l.escribir(f);
 
-			f.close();
-		} else
-			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
+		Usuario[] vUsuarios = CrearArrayDe.crearArrayUsuarios();
+		Usuario u = new Usuario(vUsuarios[id].getNombre(), id);
+		u.escribir(f);
+
+		f.close();
 
 	}
 
+	/**
+	 * Mostrar asignaciones. Permite mostrar el fichero con todas las asignaciones,
+	 * mostrando Libro -> Usuario, siempre que hayan datos que leer dentro del
+	 * archivo
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void mostrarAsignaciones() throws IOException {
-		if (new File(Const.FLIBROASIGNADOA).isFile()) {
-			f = new RandomAccessFile(Const.FLIBROASIGNADOA, "rw");
 
-			Libro l = new Libro();
-			Usuario u = new Usuario();
-			boolean hayDatos = l.leer(f);
+		f = new RandomAccessFile(Const.FLIBROASIGNADOA, "rw");
 
-			while (hayDatos) {
+		Libro l = new Libro();
+		Usuario u = new Usuario();
+		boolean hayDatos = l.leer(f);
+
+		while (hayDatos) {
+			if (l.codigo != -1)
 				l.mostrarLibro();
-
-				u.leer(f);
+			u.leer(f);
+			if (u.getId() != -1)
 				u.mostrarUsuario();
 
-				hayDatos = l.leer(f);
-			}
+			hayDatos = l.leer(f);
+		}
 
-			f.close();
-		} else
-			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
+		f.close();
 
 	}
-
 }

@@ -4,7 +4,6 @@
  */
 package Main;
 
-import Devoluciones.DevolverLibro;
 import MetLibro.RAFLibros;
 import MetUsuario.RAFUsuarios;
 import PrestamoLibro.LibroAsignadoA;
@@ -51,20 +50,7 @@ public class Main {
 				break;
 
 			case 5:
-				int id, codigo;
-				System.out.println("Codigo del libro a devolver");
-				codigo = t.leerInt();
-
-				if (DevolverLibro.comprobarPrestamo(codigo)) {
-					System.out.println("Usuario que contiene el libro a devolver");
-					id = t.leerInt();
-					if (DevolverLibro.comprobarUsuarioPrestado(id, codigo))
-						DevolverLibro.devolucion(id, codigo);
-					else
-						System.out.println("El usuario no esta en posesion del libro a devolver");
-				} else
-					System.out.println("El libro no se encuentra en prestamo");
-
+				Menu.devoluciones();
 				break;
 
 			case 6:

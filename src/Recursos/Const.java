@@ -3,10 +3,14 @@
  * @author Javier Delgado Rodriguez
  */
 package Recursos;
+
 /**
  *
  * @author Javier Delgado Rodriguez
  */
+
+import MetLibro.Libro;
+import MetUsuario.Usuario;
 
 /**
  * The Class Constantes.
@@ -73,5 +77,8 @@ public class Const {
 	 * del libro y el usuario que lo tiene.
 	 */
 	public final static String FLIBROASIGNADOA = "datos\\librosAsignados.dat";
+
+	/** Longitud en Bytes de un Usuario y un Libro = 74 Bytes */
+	public final static int N = Usuario.getlongitugRegistroUsuario() + Libro.getLongitudRegistroLibro();
 
 }

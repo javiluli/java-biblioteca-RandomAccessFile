@@ -10,7 +10,6 @@ import java.io.RandomAccessFile;
 
 import MetLibro.Libro;
 import MetUsuario.Usuario;
-import PrestamoLibro.LibroAsignadoA;
 
 public class Archivos {
 
@@ -64,11 +63,22 @@ public class Archivos {
 		f.seek(longReg * pos);
 	}
 
+	/**
+	 * Retroceder registro libro. Permmite leer un libro y, ya que RAF mueve el
+	 * punte al siguiente registro, este metodo permite retroceder la cantidad de
+	 * Bytes necesarios para volver a dejar el puntero en el registro ya leido
+	 *
+	 * @param f       the f
+	 * @param pos     the pos
+	 * @param longReg the long reg
+	 * @param l       the l
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void retrocederRegistroLibro(RandomAccessFile f, int pos, int longReg, Libro l) throws IOException {
-		// busco el primer usuario no valido de la lista, con un ID -1
+		// avanzo hasta la posicion indicada
 		f.seek(longReg * pos);
 
-		// leo la posicion del usuario y retrocedo para permanecer en el mmismo lugar
+		// leo el objeto Libro y retrocedo al inicio del mismo objeto Libro
 		l.leer(f);
 		f.seek(longReg * pos);
 	}
@@ -96,7 +106,7 @@ public class Archivos {
 		f = new File(Const.FLIBROASIGNADOA);
 		if (!f.exists()) {
 			f.createNewFile();
-			LibroAsignadoA.LisbrosAsignadosNulos();
+			LibrosAsignadosNulos();
 
 		}
 	}
@@ -170,5 +180,29 @@ public class Archivos {
 			System.out.println("El Fichero no existe - ERROR EN: contarUsuriosNulos");
 
 		return n;
+	}
+
+	/**
+	 * Lisbros asignados nulos. Crea un fichero de asignaciones Libro -> Usuario por
+	 * la misma cantidad de libros almacenados en la biblioteca
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void LibrosAsignadosNulos() throws IOException {
+		// Comprobar antes si existe el fichero.
+		if (new File(Const.FLIBROASIGNADOA).isFile()) {
+			f = new RandomAccessFile(Const.FLIBROASIGNADOA, "rw");
+
+			Usuario u = new Usuario("", -1);
+			Libro l = new Libro(-1, "", false);
+			for (int i = 0; i < Const.MAXLIBROS; i++) {
+				f.seek(i * Const.N);
+				l.escribir(f);
+				u.escribir(f);
+			}
+			f.close();
+		} else
+			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
+
 	}
 }

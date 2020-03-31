@@ -209,11 +209,14 @@ public class Prestamo {
 //			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
 
 			while (hayDatos) {
-				u.mostrarUsuario();
+				if (u.getId() != -1)
+					u.mostrarUsuario();
+
 				Libro l = new Libro();
 				for (int i = 0; i < Const.MAXLIBROSPRES; i++) {
 					l.leer(f);
-					l.mostrarLibro();
+					if (l.codigo != -1)
+						l.mostrarLibro();
 				}
 				hayDatos = u.leer(f);
 			}

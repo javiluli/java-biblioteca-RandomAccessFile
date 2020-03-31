@@ -82,7 +82,8 @@ public class RAFUsuarios {
 //			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
 
 			while (hayDatos) {
-				u.mostrarUsuario();
+				if (u.getId()!= -1)
+					u.mostrarUsuario();
 				hayDatos = u.leer(f);
 			}
 
