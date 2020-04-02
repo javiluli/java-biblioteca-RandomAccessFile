@@ -19,7 +19,7 @@ public class Prestamo {
 	static RandomAccessFile f;
 
 	/**
-	 * Vefificar prestamo. Comprueba si el libro solivitado se encuentra en
+	 * Vefificar prestamo. Comprueba si el libro solicitado se encuentra en
 	 * prestamos o no.
 	 *
 	 * @param codigo the codigo
@@ -45,22 +45,18 @@ public class Prestamo {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static boolean recuentoPrestamoUsuario(int id) throws IOException {
-		boolean b = true;
-		int n = 0;
+		boolean b = false;
 		f = new RandomAccessFile(Const.FPRESTAMOS, "r");
 		Archivos.irARegistro(f, id, Usuario.getlongitugRegistroUsuarioPrestamos());
 		Usuario u = new Usuario();
 		u.leer(f);
 		Libro l = new Libro();
 
-		for (int i = 0; i < Const.MAXLIBROSPRES; i++) {
+		for (int i = 0; i < Const.MAXLIBROSPRES && !b; i++) {
 			l.leer(f);
-			if (l.codigo == -1) {
-				n++;
-			}
+			if (l.codigo == -1)
+				b = true;
 		}
-		if (n == 0)
-			b = false;
 
 		f.close();
 		return b;
@@ -200,15 +196,25 @@ public class Prestamo {
 			System.out.println("El Fichero no existe - ERROR EN: contarResgistros");
 	}
 
+	public static void eliminarResgistro(int id) throws IOException {
+		f = new RandomAccessFile(Const.FPRESTAMOS, "rw");
+
+		Archivos.irARegistro(f, id, Usuario.getlongitugRegistroUsuarioPrestamos());
+		Usuario u = new Usuario("", -1);
+		u.escribir(f);
+
+		f.close();
+
+	}
+
 	public static void mostrarPrestamos() throws IOException {
-		// Comprobar antes si existe el fichero.
 		if (new File(Const.FPRESTAMOS).isFile()) {
 			RandomAccessFile f = new RandomAccessFile(Const.FPRESTAMOS, "r");
 			Usuario u = new Usuario();
 			boolean hayDatos = u.leer(f);
-//			f.seek(Usuario.getlongitugRegistroUsuario()); // f.length();
 
 			while (hayDatos) {
+				
 				if (u.getId() != -1)
 					u.mostrarUsuario();
 
@@ -218,6 +224,7 @@ public class Prestamo {
 					if (l.codigo != -1)
 						l.mostrarLibro();
 				}
+				
 				hayDatos = u.leer(f);
 			}
 			f.close();

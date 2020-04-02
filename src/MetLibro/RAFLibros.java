@@ -5,11 +5,14 @@ package MetLibro;
  * @author Javier Delgado Rodriguez
  */
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import MetUsuario.Usuario;
 import Recursos.Archivos;
 import Recursos.Const;
+import Recursos.CrearArrayDe;
 
 public class RAFLibros {
 	/** The f. */
@@ -91,6 +94,25 @@ public class RAFLibros {
 			f.close();
 		} else
 			System.out.println("El Fichero no existe - ERROR EN: verLibrosNoPrestados");
+	}
+
+	public static void consultaLibro(int codigo) throws IOException {
+		if (new File(Const.FLIBROASIGNADOA).isFile()) {
+			f = new RandomAccessFile(Const.FLIBROASIGNADOA, "r");
+			Archivos.irARegistro(f, codigo, Const.N);
+			Libro l = new Libro();
+			l.leer(f);
+			if (l.codigo != -1) {
+				l.mostrarLibro();
+				Usuario u = new Usuario();
+				u.leer(f);
+				u.mostrarUsuario();
+			} else
+				System.out.println("La consulta no se ha podido efectuar");
+
+			f.close();
+		} else
+			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
 	}
 
 	/**

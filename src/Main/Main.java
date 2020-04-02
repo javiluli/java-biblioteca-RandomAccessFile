@@ -54,19 +54,11 @@ public class Main {
 				break;
 
 			case 6:
-//				System.out.println("Codigo del libro a buscar");
-//				codigo = t.leerInt();
-//				vp = PrestamoLibro.verificarPrestamo(codigo);
-//				if (vp)
-//					Book.solicitarLibro(codigo);
-//				else {
-//					System.out.println("El libro no se encuntra en prestamo");
-//				}
+				RAFLibros.consultaLibro(t.leerInt());
 				break;
 
 			case 7:
 				RAFUsuarios.mostrarFicheroUsuarios();
-
 				break;
 
 			case 8:
@@ -83,9 +75,6 @@ public class Main {
 
 			case 11:
 				LibroAsignadoA.mostrarAsignaciones();
-
-			case 0:
-//			System.out.println("Salir de la aplicacion");
 				break;
 			}
 		} while (n != 0);

@@ -32,11 +32,12 @@ public class Menu {
 		System.out.println("| 2.- Alta de usuarios");
 		System.out.println("| 3.- Baja de usuarios");
 		System.out.println("| 4.- Préstamo de libros");
-//		System.out.println("| 5.- Devolución de libro");
-//		System.out.println("| 6.- Consulta de un libro");
+		System.out.println("| 5.- Devolución de libro");
+		System.out.println("| 6.- Consulta de un libro");
 		System.out.println("| 7.- Listado de usuarios");
 		System.out.println("| 8.- Listado de libros no prestados");
 		System.out.println("| 9.- Listado de todos los libros almacenados");
+		System.out.println("| 10.- Listado de los prestamos");
 		System.out.println("| 10.- Listado de los prestamos");
 		System.out.println("| 0.- Salir de la aplicacion");
 		System.out.println("==================================================");
@@ -92,24 +93,32 @@ public class Menu {
 	public static void prestarLibroAUsuario() throws Exception {
 		Teclado t = new Teclado();
 		int id, codigo;
-		// Es necesario controlar que se no se preste libros a un usuario que no existe
-		// Es necsario controlar que no se permita prestas un libro que no existe
 		System.out.println("Codigo del libro");
 		codigo = t.leerInt();
 		boolean vp = Prestamo.vefificarPrestamo(codigo);
 
 		if (!vp) {
+
 			System.out.println("ID del usuario");
 			id = t.leerInt();
 
-			boolean rp = Prestamo.recuentoPrestamoUsuario(id);
+			if (RAFUsuarios.localizarUsuario(id)) {
 
-			if (!vp && rp) {
-				Prestamo.prestarLibro(codigo);
-				Prestamo.almacenarUsuariosYPrestamos(id, codigo);
-				LibroAsignadoA.guardarAsignacion(id, codigo);
-			}
-		}
+				boolean rp = Prestamo.recuentoPrestamoUsuario(id);
+
+				if (rp) {
+					Prestamo.prestarLibro(codigo);
+					Prestamo.almacenarUsuariosYPrestamos(id, codigo);
+					LibroAsignadoA.guardarAsignacion(id, codigo);
+				} else
+					System.out.println("El usuario ha excedido el maximo de libros prestados");
+
+			} else
+				System.out.println("El usuario no existe");
+
+		} else
+			System.out.println("El libro ya se encuentra en prestamo");
+
 	}
 
 	/**
