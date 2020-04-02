@@ -37,8 +37,8 @@ public class Menu {
 		System.out.println("| 7.- Listado de usuarios");
 		System.out.println("| 8.- Listado de libros no prestados");
 		System.out.println("| 9.- Listado de todos los libros almacenados");
-		System.out.println("| 10.- Listado de los prestamos");
-		System.out.println("| 10.- Listado de los prestamos");
+		System.out.println("| 10.- Listado de los usuarios y sus libros prestados");
+		System.out.println("| 11.- Listado completo de los prestamos");
 		System.out.println("| 0.- Salir de la aplicacion");
 		System.out.println("==================================================");
 	}
@@ -46,7 +46,6 @@ public class Menu {
 	/**
 	 * Guardar libro.
 	 *
-	 * @param s the s
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void guardarLibro() throws IOException {
@@ -61,7 +60,6 @@ public class Menu {
 	/**
 	 * Guardar usuario.
 	 *
-	 * @param s the s
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void guardarUsuario() throws IOException {
@@ -75,8 +73,7 @@ public class Menu {
 
 	/**
 	 * Borrar usuario.
-	 *
-	 * @param N the n
+	 * 
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void borrarUsuario() throws IOException {
@@ -140,6 +137,18 @@ public class Menu {
 				System.out.println("El usuario no esta en posesion del libro a devolver");
 		} else
 			System.out.println("El libro no se encuentra en prestamo");
+
+	}
+
+	/**
+	 * Consulta libro.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void consultaLibro() throws IOException {
+		System.out.println("Indique el codigo del libro apra hacer la cinsulta");
+		int n = t.leerInt();
+		RAFLibros.consultaLibro(n);
 
 	}
 }

@@ -23,7 +23,7 @@ public class LibroAsignadoA {
 	static RandomAccessFile f;
 
 	/**
-	 * Guardar asignacion. Permite guardar una asignacion direta de Libro -> Usuario
+	 * Guardar asignacion. Permite guardar una asignacion direta de Libro a Usuario
 	 * de forma directa basando la posicion en el codigo del Libro.
 	 *
 	 * @param id     the id
@@ -50,7 +50,7 @@ public class LibroAsignadoA {
 
 	/**
 	 * Mostrar asignaciones. Permite mostrar el fichero con todas las asignaciones,
-	 * mostrando Libro -> Usuario, siempre que hayan datos que leer dentro del
+	 * mostrando Libro a Usuario, siempre que hayan datos que leer dentro del
 	 * archivo
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.

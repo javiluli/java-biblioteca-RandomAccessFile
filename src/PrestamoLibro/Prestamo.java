@@ -38,7 +38,7 @@ public class Prestamo {
 	/**
 	 * Recuento prestamo usuario. Permite saber cuentos espacios libres tiene el
 	 * usuario para tomar libros perstados. Si el contados es 0 significara que no
-	 * tiene mas espacio para tomar libros prestados, por lo que devolvera FALSE
+	 * tiene mas espacio para tomar libros prestados, por lo que devolvera FALSE.
 	 *
 	 * @param id the id
 	 * @return true, if successful
@@ -63,8 +63,11 @@ public class Prestamo {
 	}
 
 	/**
-	 * Primer libro prestado nulo.
-	 *
+	 * Primer libro prestado nulo. Obteniendo un suaurio, permite obtener la
+	 * posicion del primer Libro nulo o, dicho de otro modo, el primer espacio vacio
+	 * de los libros prestados del Usuario. Esto permite saber en que posicion de
+	 * las 5 disponibles se debe asignar cada Libro por Usuario.
+	 * 
 	 * @param id the id
 	 * @return the int
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -91,7 +94,7 @@ public class Prestamo {
 
 	/**
 	 * Prestar libro. Accede al fichero de FLIBROS y en su atributo de Prestado lo
-	 * coloca a TRUE
+	 * coloca a TRUE.
 	 *
 	 * @param codigo the codigo
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -108,34 +111,7 @@ public class Prestamo {
 	}
 
 	/**
-	 * Mostrar prestamos nulos.
-	 *
-	 * @throws Exception the exception
-	 */
-	public static void mostrarPrestamosNulos() throws Exception {
-
-		for (int i = 0; i < Const.MAXUSUARIOS; i++) {
-			if (new File(Const.FPRESTAMOS).isFile()) {
-				f = new RandomAccessFile(Const.FPRESTAMOS, "rw");
-				Archivos.irARegistro(f, i, Usuario.getlongitugRegistroUsuarioPrestamos());
-				Usuario u = new Usuario();
-
-				u.leer(f);
-				u.mostrarUsuario();
-				Libro l = new Libro();
-
-				for (int j = 0; j < Const.MAXLIBROSPRES; j++) {
-					l.leer(f);
-					l.mostrarLibro();
-				}
-				f.close();
-			} else
-				System.out.println("El Fichero no existe - ERROR EN: contarResgistros");
-		}
-	}
-
-	/**
-	 * Leer registro. Permite leer un registro directo
+	 * Leer registro. Permite leer un registro directo.
 	 *
 	 * @param id the id
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -148,19 +124,22 @@ public class Prestamo {
 			Usuario u = new Usuario();
 
 			u.leer(f);
+			u.mostrarUsuario();
 			Libro l = new Libro();
 
 			for (int i = 0; i < Const.MAXLIBROSPRES; i++) {
 				l.leer(f);
-				l.mostrarLibro();
+				if (l.codigo != -1)
+					l.mostrarLibro();
 			}
 			f.close();
 		} else
-			System.out.println("El Fichero no existe - ERROR EN: contarResgistros");
+			System.out.println("El Fichero no existe - ERROR EN: leerRegistro");
 	}
 
 	/**
-	 * Almacenar usuarios Y prestamos.
+	 * Almacenar usuarios Y prestamos. Permite almacenar un usuario y sus libros
+	 * prestados en el fichero, parte del codigo se explica dentro del metodo.
 	 *
 	 * @param id     the id
 	 * @param codigo the codigo
@@ -168,25 +147,27 @@ public class Prestamo {
 	 */
 	public static void almacenarUsuariosYPrestamos(int id, int codigo) throws Exception {
 		if (new File(Const.FPRESTAMOS).isFile()) {
+
+			// n |> posicion del primer espacio nulo en sus libros prestados
+			// Libro.getLongitudRegistroLibro() |> longitus en bytes de un Object Libro
 			int n = Prestamo.primerLibroPrestadoNulo(id);
 			f = new RandomAccessFile(Const.FPRESTAMOS, "rw");
 
 			// muevo el puntero hasta el usaurio deseado y asigno en el fichero dicho
 			// usuario
 			Archivos.irARegistro(f, id, Usuario.getlongitugRegistroUsuarioPrestamos());
+			// obtengo el usuario seleccionado mediante un Array de Usuarios (vUsuarios)
 			Usuario[] vUsuarios = CrearArrayDe.crearArrayUsuarios();
 			Usuario u = new Usuario(vUsuarios[id].getNombre(), id);
 			u.escribir(f);
 
-			// almaceno en FP la posicion actial del puntero para seguir en el usuario pero
-			// solo para accder de forma directa a los libros prestados
+			// almaceno en FP (Posicion del Puntero / getFilePointer()), la posicion actial
+			// del puntero para seguir en el usuario para accder de forma directa a los
+			// libros prestados de dicho usuario
 			Libro[] vLibros = CrearArrayDe.crearArrayLibros();
 			int fp = (int) f.getFilePointer();
 
-			// fp |> posicion del puntero en el fichero justo despues de leer el usuario
-			// seleccionado
-			// n |> posicion del primer espacio nulo en sus libros prestados
-			// Libro.getLongitudRegistroLibro() |> longitus en bytes de un Object Libro
+			// muevo el puntero hasta el usuario deseado mas el primer Libro nulo.
 			f.seek(fp + (n * Libro.getLongitudRegistroLibro()));
 			Libro l = new Libro(codigo, vLibros[codigo].titulo, true);
 			l.escribir(f);
@@ -196,6 +177,13 @@ public class Prestamo {
 			System.out.println("El Fichero no existe - ERROR EN: contarResgistros");
 	}
 
+	/**
+	 * Eliminar resgistro. Accede al fichero FPRESTAMOS y si el usuario no tiene
+	 * nigun libro en prestamos, dicho usuario elimina al usuario del fichero.
+	 *
+	 * @param id the id
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void eliminarResgistro(int id) throws IOException {
 		f = new RandomAccessFile(Const.FPRESTAMOS, "rw");
 
@@ -207,6 +195,11 @@ public class Prestamo {
 
 	}
 
+	/**
+	 * Mostrar prestamos. Muestra el Usuario y los libros que tiene en prestamo.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void mostrarPrestamos() throws IOException {
 		if (new File(Const.FPRESTAMOS).isFile()) {
 			RandomAccessFile f = new RandomAccessFile(Const.FPRESTAMOS, "r");
@@ -214,17 +207,18 @@ public class Prestamo {
 			boolean hayDatos = u.leer(f);
 
 			while (hayDatos) {
-				
+
 				if (u.getId() != -1)
 					u.mostrarUsuario();
 
 				Libro l = new Libro();
 				for (int i = 0; i < Const.MAXLIBROSPRES; i++) {
 					l.leer(f);
-					if (l.codigo != -1)
+					if (l.codigo != -1) {
 						l.mostrarLibro();
+					}
 				}
-				
+
 				hayDatos = u.leer(f);
 			}
 			f.close();

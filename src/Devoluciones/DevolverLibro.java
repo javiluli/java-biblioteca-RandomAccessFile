@@ -151,6 +151,7 @@ public class DevolverLibro {
 		f = new RandomAccessFile(Const.FLIBROASIGNADOA, "rw");
 		Archivos.irARegistro(f, codigo, Const.N);
 
+		// finalmente se crea y escriben usuario y libros nulos en el fichero
 		l = new Libro(-1, "", false);
 		l.escribir(f);
 

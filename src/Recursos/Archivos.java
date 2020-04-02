@@ -183,7 +183,7 @@ public class Archivos {
 	}
 
 	/**
-	 * Lisbros asignados nulos. Crea un fichero de asignaciones Libro -> Usuario por
+	 * Lisbros asignados nulos. Crea un fichero de asignaciones Libro a Usuario por
 	 * la misma cantidad de libros almacenados en la biblioteca
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -203,6 +203,5 @@ public class Archivos {
 			f.close();
 		} else
 			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
-
 	}
 }

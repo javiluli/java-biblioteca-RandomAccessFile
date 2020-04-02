@@ -1,27 +1,29 @@
-package MetLibro;
-
 /**
  *
  * @author Javier Delgado Rodriguez
  */
+package MetLibro;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import MetUsuario.Usuario;
 import Recursos.Archivos;
 import Recursos.Const;
-import Recursos.CrearArrayDe;
 
+/**
+ * The Class RAFLibros.
+ */
 public class RAFLibros {
+
 	/** The f. */
 	static RandomAccessFile f;
 
 	/**
-	 * Agrega un libro al final del fichero
+	 * Insertar al final fichero.
 	 *
-	 * @param s Titulo del libro
+	 * @param s the s
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void insertarAlFinalFichero(String s) throws IOException {
@@ -34,9 +36,9 @@ public class RAFLibros {
 	}
 
 	/**
-	 * Permite agregar un libro nuevo al fichero
+	 * Alta libro.
 	 *
-	 * @param s Titulo del libro
+	 * @param s the s
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void altaLibro(String s) throws IOException {
@@ -49,7 +51,7 @@ public class RAFLibros {
 	}
 
 	/**
-	 * Cuenta la cantidad de libros almacenados en el fichero
+	 * Contar resgistros libros.
 	 *
 	 * @return the int
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -73,7 +75,7 @@ public class RAFLibros {
 	}
 
 	/**
-	 * Permite ver por consola todos los libros que no se encuentren en prestamo
+	 * Ver libros no prestados.
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
@@ -83,7 +85,6 @@ public class RAFLibros {
 			RandomAccessFile f = new RandomAccessFile(Const.FLIBROS, "r");
 			Libro l = new Libro();
 			boolean hayDatos = l.leer(f);
-//			f.seek(Libro.getLongitudRegistroLibro()); // f.length();
 
 			while (hayDatos) {
 				if (!l.prestado)
@@ -96,6 +97,12 @@ public class RAFLibros {
 			System.out.println("El Fichero no existe - ERROR EN: verLibrosNoPrestados");
 	}
 
+	/**
+	 * Consulta libro.
+	 *
+	 * @param codigo the codigo
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void consultaLibro(int codigo) throws IOException {
 		if (new File(Const.FLIBROASIGNADOA).isFile()) {
 			f = new RandomAccessFile(Const.FLIBROASIGNADOA, "r");
@@ -112,21 +119,20 @@ public class RAFLibros {
 
 			f.close();
 		} else
-			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
+			System.out.println("El Fichero no existe - ERROR EN: consultaLibro");
 	}
 
 	/**
-	 * Permite ver todo el fichero
+	 * Mostrar fichero libros.
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void mostrarFicheroLibros() throws IOException {
-		// Comprobar antes si existe el fichero.
 		if (new File(Const.FLIBROS).isFile()) {
 			RandomAccessFile f = new RandomAccessFile(Const.FLIBROS, "r");
 			Libro l = new Libro();
 			boolean hayDatos = l.leer(f);
-			f.seek(Libro.getLongitudRegistroLibro()); // f.length();
+			f.seek(Libro.getLongitudRegistroLibro());
 
 			while (hayDatos) {
 				l.mostrarLibro();
@@ -135,6 +141,6 @@ public class RAFLibros {
 
 			f.close();
 		} else
-			System.out.println("El Fichero no existe - ERROR EN: mostrarFichero");
+			System.out.println("El Fichero no existe - ERROR EN: mostrarFicheroLibros");
 	}
 }

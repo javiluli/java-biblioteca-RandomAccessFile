@@ -40,11 +40,6 @@ public class CrearArrayDe {
 		}
 
 		f.close();
-
-//		Usuario[] v = CrearArrayDe.crearArrayUsuarios();
-//		for (Usuario usuario : v) {
-//			System.out.println(usuario.toString());
-//		}
 		return usuarios;
 	}
 
@@ -80,11 +75,6 @@ public class CrearArrayDe {
 		}
 
 		f.close();
-
-//		Libro[] v2 = CrearArrayDe.crearArrayLibros();
-//		for (Libro libro : v2) {
-//			System.out.println(libro.toString());
-//		}
 		return libros;
 	}
 
