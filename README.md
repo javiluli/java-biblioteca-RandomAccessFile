@@ -1,6 +1,6 @@
 # Gestor de bibliotecas
 
-## Uso de los metodos `RandomAccessFile`.
+## Uso de los metodos `RandomAccessFile`
 
 Aplicacion que permite gestionar, de forma sinplificada, una biblioteca, tareas como el prestamo de los libros, el alta o eliminacion de usuarios y la la propia devolucion de libros.
 
